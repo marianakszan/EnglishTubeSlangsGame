@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Tube Slangs - Pop the Slang</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Tela de Introdução com Cards Grandes para Rolar a Tela -->
+  <div id="intro-screen" class="intro-screen">
+    <div class="intro-hero">
+      <img src="imagens/logo-Photoroom.png" alt="Logo English Tube Slangs" class="intro-logo" height="500" width="500">
+      <h1>Conheça as Gírias do Inglês</h1>
+      <p>Role a tela para baixo para conferir as tirinhas oficiais do projeto e prepare-se para o desafio!</p>
+      <div class="scroll-hint">↓ Role para baixo para ver os cards ↓</div>
+    </div>
+
+    <!-- 6 Cards Grandes de Introdução -->
+    <div class="intro-cards-wrapper">
+      <div class="intro-card-large">
+        <img src="imagens/bloody1.jfif" alt="Tirinha Bloody">
+        <div class="intro-card-content">
+          <h3>Bloody (Inglês Britânico)</h3>
+          <p>Uma palavrinha de ênfase muito usada no dia a dia para intensificar adjetivos.</p>
+        </div>
+      </div>
+
+      <div class="intro-card-large">
+        <img src="imagens/brekkie1.jfif" alt="Tirinha Brekkie">
+        <div class="intro-card-content">
+          <h3>Brekkie (Gíria Australiana)</h3>
+          <p>O jeito carinhoso e abreviado de chamar o café da manhã na Austrália.</p>
+        </div>
+      </div>
+
+      <div class="intro-card-large">
+        <img src="imagens/footy1.jfif" alt="Tirinha Footy">
+        <div class="intro-card-content">
+          <h3>Footy (Gíria Australiana)</h3>
+          <p>Abreviação clássica para o futebol (Australian Rules Football ou Rugby).</p>
+        </div>
+      </div>
+
+      <div class="intro-card-large">
+        <img src="imagens/goat1.jfif" alt="Tirinha GOAT">
+        <div class="intro-card-content">
+          <h3>Goat (Greatest Of All Time)</h3>
+          <p>Usado para definir alguém que é o melhor de todos os tempos em sua área.</p>
+        </div>
+      </div>
+
+      <div class="intro-card-large">
+        <img src="imagens/hardyakka1.jfif" alt="Tirinha Hard Yakka">
+        <div class="intro-card-content">
+          <h3>Hard Yakka (Gíria Australiana)</h3>
+          <p>Expressão que representa trabalho duro e esforço físico ou mental intenso.</p>
+        </div>
+      </div>
+
+      <div class="intro-card-large">
+        <img src="imagens/stoked1.jfif" alt="Tirinha Stoked">
+        <div class="intro-card-content">
+          <h3>Stoked (Gíria Australiana)</h3>
+          <p>Significa estar extremamente empolgado, animado ou entusiasmado com algo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botão para começar -->
+    <div class="intro-footer-action">
+      <button id="start-game-btn" class="btn btn-success btn-xl">Clique para começar o jogo!</button>
+    </div>
+  </div>
+
+  <!-- Jogo Principal (Oculto inicialmente até clicar em começar) -->
+  <div id="game-main-wrapper" class="hidden">
+    <!-- Cabeçalho -->
+    <header class="header">
+      <div class="logo-container">
+        <img id="app-logo" src="imagens/logo-Photoroom.png" alt="Logo English Tube Slangs">
+      </div>
+      <div>
+        <h1>English Tube Slangs: Pop the Slang</h1>
+        <p>Clique em um balão para estourar e associar a tirinha à tradução correta.</p>
+      </div>
+      <div class="header-actions">
+        <button id="reset-game-btn" class="btn btn-outline">Reiniciar</button>
+        <button id="admin-toggle-btn" class="btn btn-outline">Admin</button>
+      </div>
+    </header>
+
+    <!-- Estatísticas -->
+    <div class="stats-bar">
+      <div class="stat-badge">
+        <span>Acertos:</span>
+        <strong id="score-text">0 / 3</strong>
+      </div>
+      <div class="stat-badge">
+        <span>Balões no Ar:</span>
+        <strong id="balloons-count">0</strong>
+      </div>
+    </div>
+
+    <!-- Área dos Balões Flutuantes -->
+    <div id="sky-area" class="sky-area"></div>
+
+    <!-- Galeria de Acertos -->
+    <section class="gallery-section">
+      <h2>🏆 Tirinhas Desvendadas</h2>
+      <div id="completed-gallery" class="completed-gallery">
+        <p class="empty-msg">Estoure os balões e acerte para colecionar as tirinhas aqui!</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Modal do Desafio -->
+  <div id="challenge-modal" class="modal-overlay hidden">
+    <div class="modal-card wide-modal">
+      <div class="modal-header">
+        <div class="country-container">
+          <img id="modal-flag-img" class="country-flag-icon" src="" alt="Bandeira">
+          <span id="modal-country">País</span>
+        </div>
+        <button id="modal-close-btn" class="close-btn">&times;</button>
+      </div>
+      
+      <div class="modal-body-split">
+        <!-- Lado Esquerdo: Tirinha -->
+        <div class="comic-container-large">
+          <img id="modal-comic-img" src="" alt="Tirinha da Gíria">
+        </div>
+        
+        <!-- Lado Direito: Alternativas e Explicação -->
+        <div class="options-container-side">
+          <h3>Qual é a gíria desta tirinha?</h3>
+          <div id="options-list" class="options-list"></div>
+          <div id="feedback-msg" class="feedback-msg hidden"></div>
+          
+          <div id="explanation-container" class="explanation-container hidden">
+            <h4>💡 Explicação da Gíria:</h4>
+            <p id="explanation-text"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Painel do Administrador -->
+  <div id="admin-modal" class="modal-overlay hidden">
+    <div class="modal-card admin-card">
+      <div class="modal-header">
+        <h2>Painel do Administrador</h2>
+        <button id="admin-close-btn" class="close-btn">&times;</button>
+      </div>
+      
+      <div class="admin-body">
+        <div id="admin-login-sec">
+          <p>Digite seu usuário e senha de administrador:</p>
+          <div class="form-group">
+            <label for="admin-user-input">Usuário:</label>
+            <input type="text" id="admin-user-input" placeholder="Digite o usuário">
+          </div>
+          <div class="form-group" style="margin-top: 10px;">
+            <label for="admin-pass-input">Senha:</label>
+            <input type="password" id="admin-pass-input" placeholder="Digite a senha">
+          </div>
+          <button id="admin-login-btn" class="btn btn-primary" style="margin-top: 15px; width: 100%;">Entrar</button>
+        </div>
+
+        <div id="admin-content-sec" class="hidden">
+          <form id="add-slang-form" class="admin-form">
+            <h3>Adicionar Nova Gíria / Tirinha</h3>
+            
+            <div class="form-group">
+              <label for="input-slang">Gíria (Inglês):</label>
+              <input type="text" id="input-slang" required placeholder="Ex: Footy">
+            </div>
+
+            <div class="form-group">
+              <label for="input-meaning">Resposta na tela(alternativa):</label>
+              <input type="text" id="input-meaning" required placeholder="Ex: Footy - 'let`s watch the boys play footy'">
+            </div>
+
+            <div class="form-group">
+              <label for="input-explanation">Explicação / Contexto da Gíria:</label>
+              <textarea id="input-explanation" rows="3" placeholder="Ex: 'Footy' é o termo abreviado..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="input-country">País / Origem:</label>
+              <input type="text" id="input-country" required placeholder="Ex: Austrália">
+            </div>
+
+            <div class="form-group">
+              <label for="input-flag-url">Bandeira do País (URL ou Arquivo):</label>
+              <input type="text" id="input-flag-url" placeholder="Cole a URL da bandeira...">
+              <div class="file-action-row">
+                <input type="file" id="input-flag-file" accept="image/*">
+                <button type="button" id="clear-flag-btn" class="btn btn-outline btn-sm">Limpar Bandeira</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="input-img-url">Imagem da Tirinha (URL ou Arquivo):</label>
+              <input type="text" id="input-img-url" placeholder="Cole a URL da tirinha...">
+              <div class="file-action-row">
+                <input type="file" id="input-img-file" accept="image/*">
+                <button type="button" id="clear-img-btn" class="btn btn-outline btn-sm">Limpar Tirinha</button>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-success">Salvar Gíria</button>
+          </form>
+
+          <hr style="margin: 20px 0;">
+
+          <h3>Gírias Cadastradas</h3>
+          <div id="admin-slang-list" class="admin-slang-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Rodapé do Site -->
+    <footer class="site-footer">
+      <p>&copy; 2026 English Tube Slangs Project. Jogo desenvolvido por Mariana Kszan. Orientadora: Professora Simara Braatz. IFPR-Campus Irati. Todos os direitos reservados.</p>
+    </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
